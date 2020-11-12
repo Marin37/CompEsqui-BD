@@ -110,7 +110,7 @@ create table Integrante (
 
 create table Prueba (
     NPrueba int not null auto_increment,
-    Nombre varchar(30),
+    Nombre varchar(40),
     Inicio date,
     Fin date,
     Tipo varchar(20),
