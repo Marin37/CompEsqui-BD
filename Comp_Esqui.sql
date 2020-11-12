@@ -59,7 +59,7 @@ create table Entrenador (
 create table Pista (
     NPista int not null auto_increment,
     NEst int,
-    LongitudKM int,
+    LongitudKM float,
     Dificultad varchar (15),
     Compuesta boolean,
 
