@@ -1,11 +1,11 @@
-drop database if exists Comp_Esqui;
-create database Comp_Esqui;
-use Comp_Esqui;
+drop database if exists CompEsqui;
+create database CompEsqui;
+use CompEsqui;
 
 
 create table Persona (
     CodP int not null auto_increment,
-    Nombre varchar (40),
+    Nombre varchar (30),
     Apellido varchar (40),
 
     constraint pk_persona primary key (CodP)
