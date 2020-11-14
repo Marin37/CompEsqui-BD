@@ -1,4 +1,4 @@
-insert ParticipanteEq into values
+insert into Participante_Eq values
 
 ("9000","501"),
 ("","502"),

@@ -730,6 +730,26 @@ insert into Pista_Prueba values
 
 
 
+insert into Participante_Eq values
+
+("9000","501"),
+("","502"),
+("","503"),
+("","504"),
+("","505"),
+("","506"),
+("","507"),
+("","508"),
+("","509"),
+("","510"),
+("","511"),
+("","512");
+
+
+
+
+
+
 insert into Participante_Ind values
 ("2100", "810", "Argentino"),
 ("", "811", "Argentino"),
@@ -793,4 +813,5 @@ insert into Participante_Ind values
 -INTEGRANTE
 -PRUEBA 
 -PISTA_PRUEBA
+-PARTICIPANTE_EQ
 -PARTICIPANTE_IND
