@@ -195,12 +195,12 @@ insert into Persona values
 
 
 insert into Federacion values
-(100, "Federacion Argentina de Ski y Andinismo", null),
-(101, "Federacion de Ski y Snowboard de Chile", null),
-(102, "U.S. Ski and Snowboard Association", null),
-(103, "Ski United Kingdom Confederation", null),
-(104, "Federation Francaise de Ski", null),
-(105, "Real Federacion Española de Deportes de Invierno", null);
+(100, "Federacion Argentina de Ski y Andinismo", 18),
+(101, "Federacion de Ski y Snowboard de Chile", 15),
+(102, "U.S. Ski and Snowboard Association", 32),
+(103, "Ski United Kingdom Confederation", 21),
+(104, "Federation Francaise de Ski", 11),
+(105, "Real Federacion Española de Deportes de Invierno", 8);
 
 
 
