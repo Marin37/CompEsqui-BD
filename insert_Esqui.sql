@@ -728,6 +728,58 @@ insert into Pista_Prueba values
 
 
 
+
+
+insert into Participante_Ind values
+("2100", "810", "Argentino"),
+("", "811", "Argentino"),
+("", "812", "Argentino"),
+("", "813", "Argentino"),
+("", "814", "Argentino"),
+("", "815", "Argentino"),
+("", "816", "Argentino"),
+("", "817", "Argentino"),
+
+("", "828", "Chileno"),
+("", "829", "Chileno"),
+("", "830", "Chileno"),
+("", "831", "Chileno"),
+("", "832", "Chileno"),
+
+("", "854", "Estadounidense"),
+("", "855", "Estadounidense"),
+("", "856", "Estadounidense"),
+("", "857", "Estadounidense"),
+("", "858", "Estadounidense"),
+("", "859", "Estadounidense"),
+("", "860", "Estadounidense"),
+("", "861", "Estadounidense"),
+("", "862", "Estadounidense"),
+("", "863", "Estadounidense"),
+("", "864", "Estadounidense"),
+
+("", "877", "Ingles"),
+("", "878", "Ingles"),
+("", "879", "Ingles"),
+("", "880", "Ingles"),
+("", "881", "Ingles"),
+("", "882", "Ingles"),
+("", "883", "Ingles"),
+("", "884", "Ingles"),
+("", "885", "Ingles"),
+
+("", "892", "Frances"),
+("", "893", "Frances"),
+("", "894", "Frances"),
+("", "895", "Frances"),
+("", "896", "Frances"),
+
+("", "902", "Espanol"),
+("", "903", "Espanol"),
+("", "904", "Espanol");
+
+
+
 -PERSONA
 -FEDERACION
 -ESTACION
@@ -741,3 +793,4 @@ insert into Pista_Prueba values
 -INTEGRANTE
 -PRUEBA 
 -PISTA_PRUEBA
+-PARTICIPANTE_IND
