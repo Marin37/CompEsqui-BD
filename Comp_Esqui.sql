@@ -24,7 +24,7 @@ create table Estacion (
     Nombre varchar (60),
     Direccion varchar (60),
     Telefono varchar (15),
-    totalkm int,
+    totalkm float,
 
     constraint pk_estacion primary key (NEst)
 );
