@@ -224,3 +224,4 @@ create table Posicion_Ind (
     constraint pk_posind primary key (CodPosicInd),
     constraint fk_posind_ttind foreign key (CodTTInd) references Tiempo_Tot_Ind (CodTTInd)
 );
+
