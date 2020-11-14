@@ -680,9 +680,9 @@ insert into Prueba values
 ("303","Vuelta al lago de cristal","2020/08/22","2020/08/31","fondo"),
 ("304","Highlands Circuit","2020/09/02","2020/09/27","slalom"),
 ("305","Aurora Iris","2020/09/08","2020/09/23","carrera"),
-("306","Tiburón Raudo","2020/09/14","2020/09/28","slalom"),
+("306","Tiburon Raudo","2020/09/14","2020/09/28","carrera"),
 ("307","Top to Bottom","2020/09/23","2020/10/02","fondo"),
-("308","Convergencia Acelerada","2020/10/04","2020/10/09","carrera"),
+("308","Convergencia Acelerada","2020/10/04","2020/10/09","slalom"),
 ("309","Frostfire Gauntlet","2020/10/06","2020/10/19","carrera"),
 ("310","Winter's Wrath","2020/10/11","2020/10/17","carrera");
 
