@@ -149,7 +149,7 @@ create table Equipo_Prueba (
 );
 
 create table Tiempo_Int (
-    CodPP int not null auto_increment,
+    CodPP int not null,
     NInt int not null,
     Tiempo time,
     Acabado boolean,
