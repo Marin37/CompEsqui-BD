@@ -417,6 +417,7 @@ insert into Pista values
 ("", "168", 5.1, "Rojo", 0);                                                        
                                                         
 insert into Pista_Comp values
+
 ("204","200"),("204","201"),
 ("205","202"),("205","203"),
 
