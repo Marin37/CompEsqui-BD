@@ -180,7 +180,7 @@ create table Posicion_Eq (
 create table Participante_Ind (
     NPartInd int not null auto_increment,
     CodEsq int,
-    Nacionalidad varchar(20),
+    Nacionalidad varchar(25),
 
     constraint pk_partind primary key (NPartInd),
     constraint fk_partind_esq foreign key (CodEsq) references Esquiador (CodEsq)
