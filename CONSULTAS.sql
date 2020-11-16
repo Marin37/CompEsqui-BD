@@ -244,13 +244,14 @@ select NInt, NEq
                                 group by NInt);
 
 select I.CodEsq, concat(P.Nombre, " ", P.Apellido) as "Nombre y Apellido", EQ.Nombre "Equipo"
-    from Integrante I
+  from Integrante I
     inner join Esquiador E on I.CodEsq = E.CodEsq
     inner join Persona P on E.CodP = P.CodP
     inner join Equipo EQ on I.NEq = EQ.NEq
-        where Nint not in (select NInt
-                            from Tiempo_Int
-                                group by NInt);
+      where Nint not in (select NInt
+                          from Tiempo_Int
+                            group by NInt)
+        order by EQ.NEq;
 
 
 
