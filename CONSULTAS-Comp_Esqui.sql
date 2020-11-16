@@ -1,11 +1,11 @@
-/* TODAS ESTAS CONSULTAS SE PUEDEN COPIAR ENTERAS Y TIRAR
-EN LA CONSOLA (excepto la 5) */
+/* TODAS ESTAS CONSULTAS ESTÁN LISTAS PARA SER COPIADAS
+ENTERAS Y TIRADAS EN LA CONSOLA (excepto la 5 en 2 partes) */
 
 
 /* 1) Informar ganador y tiempo utilizado de la prueba 
 que se desarrolló en la mayor cantidad de jornadas*/
 
-SET @NPrueba = (
+set @NPrueba = (
 select NPrueba 
     from Pista_Prueba 
         group by NPrueba
@@ -16,7 +16,7 @@ select NPrueba
                                         group by NPrueba) A));
 select @NPrueba;
 
-SET @NPartInd = (
+set @NPartInd = (
     select NPartInd
         from Prueba_Ind PI, Tiempo_Tot_Ind TTI, Posicion_Ind P
             where Posicion = 1
@@ -26,7 +26,7 @@ SET @NPartInd = (
 select @NPartInd;
 
 
-SET @TiempoTot = (
+set @TiempoTot = (
     select TTI.TiempoTot
         from Prueba_Ind PI, Tiempo_Tot_Ind TTI, Posicion_Ind P
             where Posicion = 1
@@ -303,7 +303,6 @@ insert into Estacion values
 (@NEstNuevo, "Sur / Norte", "Av. El Bosque 86, Las Condes", "+56957638114", @TotalKM);
 
 
-
 set @MaxF =(
 select max(F)
     from (select count(NFed) as "F"
@@ -329,3 +328,187 @@ select @NFedMenor;
 insert into Administracion values
 (@NFedMenor,@NEstNuevo),
 (@NFedMayor,@NEstNuevo);
+
+set @Nest = (
+    select Nest
+        from contacto
+            group by Nest
+            having count(*) = @MinContact);
+select @NEst;
+
+
+
+
+
+/* 9)   SITUACIÓN LÓGICA  A
+Debido a los decepcionantes resultados de la ultima prueba, los
+administradores del equipo que quedó en ultimo puesto han decidido cambiar 
+su entrenador, y contratar  al entrenador del equipo que resultó ganador, 
+y de esta manera en un futuro conseguir mejores resultados */
+
+
+set @UltNPrueba = (
+	select NPrueba
+		from Prueba
+			where Inicio = (select max(Inicio)
+		                        from Prueba));
+select @UltNPrueba;
+
+select CodEqPrb
+	from equipo_prueba
+		where NPrueba = @UltPrueba;
+
+select P.Posicion, P.CodTTEq, CodEqPrb
+    from Posicion_Eq P
+        inner join Tiempo_Tot_Eq TT on P.CodTTEq = TT.CodTTEq
+        where CodEqPrb in (select CodEqPrb
+                            from equipo_prueba
+                                where NPrueba = @UltPrueba) 
+            order by Posicion;
+
+set @UltPosic = (
+select max(P.Posicion)
+    from Posicion_Eq P
+        inner join Tiempo_Tot_Eq TT on P.CodTTEq = TT.CodTTEq
+        where CodEqPrb in (select CodEqPrb
+                            from equipo_prueba
+                                where NPrueba = @UltPrueba) 
+            order by Posicion); select @UltPosic;
+
+set @NEqPerdedor = (
+select E.NEq
+    from Posicion_Eq P
+        inner join Tiempo_Tot_Eq TT on P.CodTTEq = TT.CodTTEq
+        inner join Equipo_Prueba EP on TT.CodEqPrb = EP.CodEqPrb
+        inner join Participante_Eq PE on EP.NPartEq = PE.NPartEq
+        inner join Equipo E on PE.NEq = E.NEq
+        where EP.CodEqPrb in (select CodEqPrb
+                            from equipo_prueba
+                                where NPrueba = @UltPrueba) 
+        and Posicion = @UltPosic
+        ); select @NEqPerdedor;
+
+set @NEqGanador = (
+select E.NEq
+    from Posicion_Eq P
+        inner join Tiempo_Tot_Eq TT on P.CodTTEq = TT.CodTTEq
+        inner join Equipo_Prueba EP on TT.CodEqPrb = EP.CodEqPrb
+        inner join Participante_Eq PE on EP.NPartEq = PE.NPartEq
+        inner join Equipo E on PE.NEq = E.NEq
+        where EP.CodEqPrb in (select CodEqPrb
+                            from equipo_prueba
+                                where NPrueba = @UltPrueba) 
+        and Posicion = 1
+        ); select @NEqGanador;
+
+
+set @EntrPerdedor = (
+    select CodEntr
+        from Equipo
+            where NEq = @NEqPerdedor);
+select @EntrPerdedor;
+
+set @EntrGanador = (
+    select CodEntr
+        from equipo
+            where NEq = @NEqGanador);
+select @EntrGanador;
+
+select * from Equipo;
+update Equipo
+	set CodEntr = @EntrGanador
+		where CodEntr = @EntrPerdedor;
+select * from Equipo;
+
+
+
+
+
+/* 9)   SITUACIÓN LÓGICA  B
+Debido que hay entrenadores que por un largo tiempo no pudieron
+conseguir estar en un equipo, han estado en una situación economica
+bastante inestable y la oportunidad que se les presentó fue ser parte
+de contactos,siendo ellos parte de la lista de contactos de la estación
+con la menor cantidad de contactos.
+*/
+
+/*Vemos cuantos contactos tiene cada estación*/
+
+select Nest,count(*)"CantContact"
+        from contacto
+            group by Nest;
+
+/*Averiguamos la minima cantidad de contactos que tiene una estacion*/
+
+set @MinContact = (select min(CantContact)
+                    from  (select Nest,count(*)"CantContact"
+                                from contacto
+                                    group by Nest)a);
+select @MinContact;
+
+/* Buscamos la estación que tenga esa cantidad de contactos*/
+
+set @Nest = (
+    select Nest
+        from contacto
+            group by Nest
+            having count(*) = @MinContact);
+select @NEst;
+
+
+/*Nos fijamos cuales son los CodP de los entrenadores sin equipos(son 4 pero lo hacemos de esta manera)*/
+select E.CodP
+from entrenador E
+where E.CodEntr not in (select EQ.CodEntr
+                            from Equipo EQ);
+							
+set @CodPers1 = (select E.CodP
+                    from entrenador E
+                        where E.CodEntr not in (select EQ.CodEntr
+                                    from Equipo EQ)limit 1);
+select @CodPers1;
+
+/*Para luego borrar el @CodPers1 que está en entrenador*/
+delete from entrenador where
+CodP = @CodPers1;
+											
+
+/*Estos 3 pasos lo repetimos 4 vecs hasta que no haya ningún CodP sin equipo en entrenador*/
+set @CodPers2 = (select E.CodP
+                    from entrenador E
+                        where E.CodEntr not in (select EQ.CodEntr
+                                    from Equipo EQ)limit 1);
+select @CodPers2;					
+
+delete from entrenador where
+CodP = @CodPers2;
+
+
+
+set @CodPers3 = (select E.CodP
+                    from entrenador E
+                        where E.CodEntr not in (select EQ.CodEntr
+                                    from Equipo EQ)limit 1);
+select @CodPers3;
+
+delete from entrenador where
+Codp = @CodPers3;
+
+
+
+set @CodPers4 = (select E.CodP
+                    from entrenador E
+                        where E.CodEntr not in (select EQ.CodEntr
+                                    from Equipo EQ)limit 1);
+select @CodPers4;
+
+delete from entrenador where
+CodP = @CodPers4;
+
+/*Y finalmente lo que tenemos que hacer es el insert en contactos de todas las personas 
+No hace falta poner una nueva PK, la tabla ya tiene auto_increment*/
+insert into contacto values
+("",@CodPers1,@Nest),
+("",@CodPers2,@Nest),
+("",@CodPers3,@Nest),
+("",@CodPers4,@Nest);
