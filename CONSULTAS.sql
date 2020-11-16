@@ -1,3 +1,7 @@
+/* TODAS ESTAS CONSULTAS SE PUEDEN COPIAR ENTERAS Y TIRAR
+EN LA CONSOLA (excepto la 5) */
+
+
 /* 1) Informar ganador y tiempo utilizado de la prueba 
 que se desarrolló en la mayor cantidad de jornadas*/
 
@@ -285,6 +289,43 @@ Para determinar cuántos km esquiables tendrá se pensó en tomar el promedio de
 que tiene toda la competencia. Las pistas aún no serán asignadas porque deben evaluar si hay 
 algún recorte de las ya existentes */
 
-select round(avg(TotalKM), 1)
-    from estacion;
+set @TotalKM = (
+    select round(avg(TotalKM), 1)
+        from Estacion);
+select @TotalKM;
 
+set @NEstNuevo = (
+    select max(NEst) +1
+        from Estacion);
+select @NEstNuevo;
+
+insert into Estacion values
+(@NEstNuevo, "Sur / Norte", "Av. El Bosque 86, Las Condes", "+56957638114", @TotalKM);
+
+
+
+set @MaxF =(
+select max(F)
+    from (select count(NFed) as "F"
+            from Administracion A
+            inner join Estacion E on A.NEst = E.NEst
+                group by A.NFed)A);
+select @MaxF;
+
+set @NFedMayor = (
+select NFed
+    from Administracion
+        group by NFed   
+            having count(NFed) = @MaxF);
+select @NFedMayor;
+
+set @NFedMenor = (
+select NFed
+    from Administracion
+        group by NFed   
+            having count(NFed) = 1);
+select @NFedMenor;
+
+insert into Administracion values
+(@NFedMenor,@NEstNuevo),
+(@NFedMayor,@NEstNuevo);
