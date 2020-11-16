@@ -169,7 +169,7 @@ select E.CodEntr, concat(P.Nombre, " ", P.Apellido) AS "Entrenador", count(NEq) 
 /* 5) Listar nombre y federación de todos los participantes (individual
 o en equipo) que compitieron en la inauguración de las olimpiadas */
 
-/* - INDIVIDUAL - */
+/* - INDIVIDUAL - INAUGURACIÓN- */
 
 set @FInaug = (
     select min(FPistaPrueba)
@@ -197,7 +197,7 @@ select concat(P.Nombre, " ", Apellido) as "Nombre y Apellido", F.Nombre "Federac
 
 
 
-/* - EQUIPO - */
+/* - EQUIPO - CIERRE - */
 
 set @FCierre = (
     select max(FPistaPrueba)
@@ -254,4 +254,37 @@ select I.CodEsq, concat(P.Nombre, " ", P.Apellido) as "Nombre y Apellido", EQ.No
         order by EQ.NEq;
 
 
+
+/* 7) Identificar a las estaciones de esquí que sean administradas por 
+más de una federación, indicando nombre, km esquiables y cantidad de
+pistas, ordenadas alfabéticamente. */
+
+select NEst
+	from administracion
+		group by NEst
+			having count(NFed) > 1;
+
+select E.NEst, E.Nombre, count(NPista) as "Cantidad de Pistas", E.TotalKM
+	from pista P, estacion E
+		where E.NEst = P.NEst
+			group by NEst
+				having NEst in (select NEst
+									from administracion
+										group by NEst
+											having count(NFed) > 1)
+					order by Nombre;
+
+
+
+
+/* 8)   SITUACIÓN LÓGICA
+Dada la cantidad de participantes en las olimpiadas se decidió habilitar una nueva estación
+de esquí llamada “Sur/Norte”. Para administrar se pensó en la federación que tiene asignada
+una sola estación junto a la federación que tiene la mayor cantidad de estaciones asignadas. 
+Para determinar cuántos km esquiables tendrá se pensó en tomar el promedio de km totales 
+que tiene toda la competencia. Las pistas aún no serán asignadas porque deben evaluar si hay 
+algún recorte de las ya existentes */
+
+select round(avg(TotalKM), 1)
+    from estacion;
 
