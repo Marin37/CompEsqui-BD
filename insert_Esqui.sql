@@ -200,7 +200,7 @@ insert into Federacion values
 (102, "U.S. Ski and Snowboard Association", 32),
 (103, "Ski United Kingdom Confederation", 21),
 (104, "Federation Francaise de Ski", 11),
-(105, "Real Federacion Española de Deportes de Invierno", 8);
+(105, "Real Federacion Espanola de Deportes de Invierno", 8);
 
 
 

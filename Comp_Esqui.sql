@@ -1,6 +1,6 @@
-drop database if exists CompEsqui;
-create database CompEsqui;
-use CompEsqui;
+drop database if exists Comp_Esqui;
+create database Comp_Esqui;
+use Comp_Esqui;
 
 
 create table Persona (
@@ -27,7 +27,7 @@ create table Estacion (
     totalkm float,
 
     constraint pk_estacion primary key (NEst)
-);
+);  
 
 create table Administracion (
     NFed int not null,
@@ -122,7 +122,7 @@ create table Pista_Prueba (
     CodPP int not null auto_increment,
     NPrueba int,
     NPista int,
-    FechaPista date,
+    FPistaPrueba date,
 
     constraint pk_pp primary key (CodPP),
     constraint fk_pp_pista foreign key (NPista) references Pista (NPista),
