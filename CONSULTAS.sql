@@ -223,3 +223,34 @@ select concat(P.Nombre, " ", Apellido) as "Nombre y Apellido", F.Nombre "Federac
             where I.NInt in (select NInt                      
                                       from Tiempo_Int            
                                           where CodPP = @CodPP);
+
+
+
+
+
+
+/* 6) Identificar los esquiadores que al final de la competencia 
+no participaron en ninguna prueba y formaban parte de un equipo, 
+junto al nombre del equipo;   ordenado por equipo. */
+
+select NInt
+    from Tiempo_Int
+        group by NInt;
+
+select NInt, NEq
+    from Integrante
+        where Nint not in (select NInt
+                            from Tiempo_Int
+                                group by NInt);
+
+select I.CodEsq, concat(P.Nombre, " ", P.Apellido) as "Nombre y Apellido", EQ.Nombre "Equipo"
+    from Integrante I
+    inner join Esquiador E on I.CodEsq = E.CodEsq
+    inner join Persona P on E.CodP = P.CodP
+    inner join Equipo EQ on I.NEq = EQ.NEq
+        where Nint not in (select NInt
+                            from Tiempo_Int
+                                group by NInt);
+
+
+
